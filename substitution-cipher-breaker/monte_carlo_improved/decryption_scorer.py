@@ -18,10 +18,4 @@ class DecryptionScorer:
         ln(s) = ln(f1) + ln(f2) + ... + ln(fn)
 
         """
-        ln_score = 0
-        bfm = self.bfm
-
-        for bigram in NGramParser.generate_bigrams(d.plaintext):
-            ln_score += bfm.ln_freq[bigram]
-
-        d.ln_score = ln_score
+        d.ln_score = sum(self.bfm.ln_freq[bigram] for bigram in NGramParser.generate_bigrams(d.plaintext))

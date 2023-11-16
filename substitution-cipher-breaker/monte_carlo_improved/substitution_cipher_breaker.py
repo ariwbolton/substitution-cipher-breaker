@@ -1,5 +1,6 @@
 import random
 import math
+import time
 
 from .bigram_frequency_matrix import BigramFrequencyMatrix
 from .substitution_key import SubstitutionKey
@@ -26,8 +27,14 @@ class SubstitutionCipherBreaker:
 
         n = 0  # iteration number
 
-        while n <= 1.5 * 10e3:
+        start_time = time.time()
+
+        while True:
             if n % 1000 == 0:
+                if time.time() - start_time > 15:
+                    # Run for 15s!
+                    break
+
                 print(f'Iteration {n}, key: {k}, ln_score: {d.ln_score}')
 
             since_improvement = n - best_n_or_reset
