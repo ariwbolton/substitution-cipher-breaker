@@ -1,4 +1,4 @@
-### Brute Force + Dictionary
+## Brute Force + Dictionary
 
 The simplest method looks roughly as follows:
 
