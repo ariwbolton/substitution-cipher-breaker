@@ -6,10 +6,11 @@ from .substitution_key import SubstitutionKey
 from .decryption import Decryption
 from .decryption_scorer import DecryptionScorer
 
+
 class SubstitutionCipherBreaker:
 
-    def __init__(self, *, corpus_filename: str):
-        self.bfm = BigramFrequencyMatrix.from_corpus(corpus_filename)
+    def __init__(self, *, bfm: BigramFrequencyMatrix):
+        self.bfm = bfm
         self.scorer = DecryptionScorer(bfm=self.bfm)
 
     def break_code(self, ciphertext: str):

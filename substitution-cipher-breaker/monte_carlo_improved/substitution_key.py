@@ -30,7 +30,7 @@ class SubstitutionKey:
         return self.swapped(i, j)
 
     def decryption(self, ciphertext: str) -> Decryption:
-        plaintext = str(self.mapping[c] if c.isalpha() else c for c in ciphertext)
+        plaintext = "".join(self.mapping[c] if c.isalpha() else c for c in ciphertext)
 
         return Decryption(key=self, plaintext=plaintext, ln_score=None)
 
