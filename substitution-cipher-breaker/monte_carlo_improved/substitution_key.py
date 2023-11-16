@@ -3,7 +3,7 @@ import random
 from typing import Dict
 import string
 
-from decryption import Decryption
+from .decryption import Decryption
 
 
 class SubstitutionKey:

@@ -1,28 +1,16 @@
 import random
 import math
 
-from bigram_frequency_matrix import BigramFrequencyMatrix
-from corpus_parser import CorpusParser
-from substitution_key import SubstitutionKey
-from decryption import Decryption
-from decryption_scorer import DecryptionScorer
+from .bigram_frequency_matrix import BigramFrequencyMatrix
+from .substitution_key import SubstitutionKey
+from .decryption import Decryption
+from .decryption_scorer import DecryptionScorer
 
 class SubstitutionCipherBreaker:
 
     def __init__(self, *, corpus_filename: str):
-        self.bfm = SubstitutionCipherBreaker.get_bigram_frequency_matrix(corpus_filename)
+        self.bfm = BigramFrequencyMatrix.from_corpus(corpus_filename)
         self.scorer = DecryptionScorer(bfm=self.bfm)
-
-    @staticmethod
-    def get_bigram_frequency_matrix(corpus_filename: str) -> BigramFrequencyMatrix:
-        cp = CorpusParser(corpus_filename)
-
-        bfm = BigramFrequencyMatrix()
-
-        bfm.read_words(cp.generate_words())
-        bfm.generate_ln_m()
-
-        return bfm
 
     def break_code(self, ciphertext: str):
         k = SubstitutionKey.from_original_alphabet()
@@ -30,7 +18,7 @@ class SubstitutionCipherBreaker:
 
         n = 0  # iteration number
 
-        while n < 5000:
+        while n <= 5000:
             if n % 1000 == 0:
                 print(f'Iteration {n}, key: {k}, ln_score: {d.ln_score}')
                 print(d.plaintext)
@@ -70,6 +58,12 @@ class SubstitutionCipherBreaker:
         """Always accept if d_prime is better. Otherwise, accept probabilistically."""
         if d_prime.ln_score > d.ln_score:
             return True
+
+        # Use the ratio of (d' / d) as the probability of accepting d'
+        # But, need to handle underflow; these are very small numbers (so we only have log values, anyways)
+        # r = (d' / d)
+        # ln(r) = ln(d') - ln(d)
+        # r = e^(ln(d') - ln(d))
 
         r = math.exp(d_prime.ln_score - d.ln_score)
         p = random.random()

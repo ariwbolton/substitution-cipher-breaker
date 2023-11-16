@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "substitution-cipher-breaker"
+version = "0.1.0"
+description = "Substitution cipher breaking algorithms"
+authors = ["Ari Wolff Bolton <ariwbolton@gmail.com>"]
+readme = "README.md"
+packages = [{include = "substitution_cipher_breaker"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
