@@ -54,7 +54,7 @@ def findMatches(encrypted, current_dict_list, nextList, words_sorted, string, fo
     length = len(encrypted)
     potentials = words_sorted[length]
     
-    d = merge_dicts(current_dict_list)
+    d = merge_dicts(current_dict_lisåt)
     d_inv = invertMap(d)
     
     findMatches.num += 1
