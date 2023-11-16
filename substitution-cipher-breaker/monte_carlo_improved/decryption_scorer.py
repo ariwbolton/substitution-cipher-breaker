@@ -24,8 +24,4 @@ class DecryptionScorer:
         for bigram in NGramParser.generate_bigrams(d.plaintext):
             ln_score += bfm.ln_freq[bigram]
 
-        # TODO: Figure out this piece!!
-        # Number of bigrams is 458 in ciphertext
-        # ln_score -= 458 * self.lnS
-
         d.ln_score = ln_score

@@ -35,6 +35,4 @@ class SubstitutionKey:
         return Decryption(key=self, plaintext=plaintext, ln_score=None)
 
     def __repr__(self):
-        s = ''.join(self.mapping[c] for c in string.ascii_lowercase)
-
-        return f'SubstitutionKey({s})'
+        return ''.join(self.mapping[c] for c in string.ascii_lowercase)

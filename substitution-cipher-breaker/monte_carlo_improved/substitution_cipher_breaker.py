@@ -19,34 +19,25 @@ class SubstitutionCipherBreaker:
 
         n = 0  # iteration number
 
-        while n <= 5000:
+        while n <= 5 * 10e3:
             if n % 1000 == 0:
                 print(f'Iteration {n}, key: {k}, ln_score: {d.ln_score}')
-                print(d.plaintext)
-                print('\n')
 
             n += 1
 
-            k_prime = k.random_swapped()
-            d_prime = self.get_scored_decryption(k, ciphertext)
+            # Try up to N random swaps until we get one which is accepted, before starting over
+            for i in range(2):
+                k_prime = k.random_swapped()
+                d_prime = self.get_scored_decryption(k_prime, ciphertext)
 
-            # Non-deterministically accept or reject swap
-            if SubstitutionCipherBreaker.accept(d=d, d_prime=d_prime):
-                k = k_prime
-                d = d_prime
+                # Non-deterministically accept or reject swap
+                if SubstitutionCipherBreaker.accept(d=d, d_prime=d_prime):
+                    k = k_prime
+                    d = d_prime
 
-            # TODO: Figure out restart + termination conditions
-            '''
-            # Potential stopping point
-            if n % 4000 == 0:
-            	if f.lnPL < -2327:
-            		# Restart algorithm if we're stuck in a local maxima
-            		f = Perm()
-            	else:
-            		# Termination condition because
-            		# we know what we're looking for
-            		break
-            '''
+                    break
+
+        print(d.plaintext)
 
     def get_scored_decryption(self, k: SubstitutionKey, ciphertext: str):
         d = k.decryption(ciphertext)
