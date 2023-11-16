@@ -18,6 +18,14 @@ class SubstitutionKey:
     def from_original_alphabet():
         return SubstitutionKey(mapping={c: c for c in string.ascii_lowercase})
 
+    @staticmethod
+    def random():
+        shuffled = list(string.ascii_lowercase)
+
+        random.shuffle(shuffled)
+
+        return SubstitutionKey(mapping={c: r for c, r in zip(list(string.ascii_lowercase), shuffled)})
+
     def swapped(self, i: str, j: str):
         new_mapping = self.mapping.copy()
         new_mapping[i], new_mapping[j] = new_mapping[j], new_mapping[i]
