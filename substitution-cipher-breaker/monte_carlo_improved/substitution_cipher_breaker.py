@@ -22,8 +22,11 @@ class SubstitutionCipherBreaker:
 
         should_step = True
 
-        while should_step:
-            should_step = visitor.step()
+        try:
+            while should_step:
+                should_step = visitor.step()
+        except KeyboardInterrupt:
+            print('KeyboardInterrupt - Exiting...')
 
         print('\n=== Best ===')
         print(visitor.best.d.plaintext)
